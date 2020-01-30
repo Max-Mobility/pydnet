@@ -21,7 +21,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import tensorflow as tf
+# import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 
 # Hand-made leaky relu
 def leaky_relu(x, alpha=0.2):
@@ -30,7 +32,7 @@ def leaky_relu(x, alpha=0.2):
 # 2D convolution wrapper
 def conv2d_leaky(x, kernel_shape, bias_shape, strides=1, relu=True, padding='SAME'):
   # Conv2D
-  weights = tf.get_variable("weights", kernel_shape, initializer=tf.contrib.layers.xavier_initializer(), dtype=tf.float32)
+  weights = tf.get_variable("weights", kernel_shape, initializer=tf.glorot_uniform_initializer(), dtype=tf.float32)
   biases = tf.get_variable("biases", bias_shape, initializer=tf.truncated_normal_initializer(), dtype=tf.float32)
   output = tf.nn.conv2d(x, weights, strides=[1, strides, strides, 1], padding=padding)
   output = tf.nn.bias_add(output, biases)
@@ -42,7 +44,7 @@ def conv2d_leaky(x, kernel_shape, bias_shape, strides=1, relu=True, padding='SAM
 # 2D deconvolution wrapper
 def deconv2d_leaky(x, kernel_shape, bias_shape, strides=1, relu=True, padding='SAME'):
   # Conv2D
-  weights = tf.get_variable("weights", kernel_shape, initializer=tf.contrib.layers.xavier_initializer(), dtype=tf.float32)
+  weights = tf.get_variable("weights", kernel_shape, initializer=tf.glorot_uniform_initializer(), dtype=tf.float32)
   biases = tf.get_variable("biases", bias_shape, initializer=tf.truncated_normal_initializer(), dtype=tf.float32)
   x_shape = tf.shape(x)
   outputShape = [x_shape[0],x_shape[1]*strides,x_shape[2]*strides,kernel_shape[2]]  

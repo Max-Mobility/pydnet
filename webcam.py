@@ -22,7 +22,10 @@
 # SOFTWARE.
 
 
-import tensorflow as tf
+# import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
+
 import sys
 import os
 import argparse
@@ -67,7 +70,8 @@ def main(_):
         while True:
           for i in range(4):
             cam.grab()
-          ret_val, img = cam.read() 
+          ret_val, img = cam.read()
+          cv2.imshow('raw', img)
           img = cv2.resize(img, (width, height)).astype(np.float32) / 255.
           img = np.expand_dims(img, 0)
           start = time.time()
