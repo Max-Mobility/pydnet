@@ -71,7 +71,6 @@ def main(_):
           for i in range(4):
             cam.grab()
           ret_val, img = cam.read()
-          cv2.imshow('raw', img)
           img = cv2.resize(img, (width, height)).astype(np.float32) / 255.
           img = np.expand_dims(img, 0)
           start = time.time()
@@ -80,7 +79,7 @@ def main(_):
 
           disp_color = applyColorMap(disp[0,:,:,0]*20, 'plasma')
           toShow = (np.concatenate((img[0], disp_color), 0)*255.).astype(np.uint8)
-          toShow = cv2.resize(toShow, (width/2, height))
+          toShow = cv2.resize(toShow, (int(width/2), height))
 
           cv2.imshow('pydnet', toShow)
           k = cv2.waitKey(1)         
