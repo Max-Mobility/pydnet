@@ -1,5 +1,12 @@
 # PyDnet
 
+### Docker:
+If you are running this inside of docker and you get X11 errors, you may need to set this environment variable:
+
+```bash
+export QT_X11_NO_MITSHM=1
+```
+
 ### Update: 
 If you are looking Android/iOS implementations of PyDnet, take a look here:
 https://github.com/FilippoAleotti/mobilePydnet
